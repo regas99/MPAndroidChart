@@ -7,10 +7,12 @@ import android.graphics.RectF;
 
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.StackEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IScatterDataSet;
+import com.github.mikephil.charting.interfaces.datasets.IStackDataSet;
 
 import java.util.List;
 
@@ -231,6 +233,46 @@ public class Transformer {
 
         getValueToPixelMatrix().mapPoints(valuePoints);
 
+        return valuePoints;
+    }
+
+    protected float[] valuePointsForGenerateTransformedValuesStack = new float[1];
+    /**
+     * Transforms an StackEntry into a float array containing the x and
+     * y values transformed with all matrices for the STACKCHART.
+     *
+     * @param set
+     * @return three x,y for each displayed StackEntry - min, value, max
+     */
+    public float[] generateTransformedValuesStackEntry(IStackDataSet set,
+                                                       float phaseX, float phaseY, int from, int to) {
+        // only include entries that are in x phase
+        final int count = (int) ((to - from) * phaseX + 1) * 6;
+
+        if (valuePointsForGenerateTransformedValuesStack.length != count) {
+            valuePointsForGenerateTransformedValuesStack = new float[count];
+        }
+        float[] valuePoints = valuePointsForGenerateTransformedValuesStack;
+
+        for (int j = 0; j < count; j += 6) {
+            StackEntry e = set.getEntryForIndex(j / 6 + from);
+            if (e != null) {
+                valuePoints[j] = e.getX();
+                valuePoints[j + 1] = e.getMin() * phaseY;
+                valuePoints[j + 2] = e.getX();
+                valuePoints[j + 3] = e.getY() * phaseY;
+                valuePoints[j + 4] = e.getX();
+                valuePoints[j + 5] = e.getMax() * phaseY;
+            } else {
+                valuePoints[j] = 0;
+                valuePoints[j + 1] = 0;
+                valuePoints[j + 2] = 0;
+                valuePoints[j + 3] = 0;
+                valuePoints[j + 4] = 0;
+                valuePoints[j + 5] = 0;
+            }
+        }
+        getValueToPixelMatrix().mapPoints(valuePoints);
         return valuePoints;
     }
 

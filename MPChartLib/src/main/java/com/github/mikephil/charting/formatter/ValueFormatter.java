@@ -7,6 +7,7 @@ import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.data.RadarEntry;
+import com.github.mikephil.charting.data.StackEntry;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 /**
@@ -132,6 +133,16 @@ public abstract class ValueFormatter implements IAxisValueFormatter, IValueForma
      */
     public String getCandleLabel(CandleEntry candleEntry) {
         return getFormattedValue(candleEntry.getHigh());
+    }
+
+    /**
+     * Used to draw high labels, calls {@link #getFormattedValue(float)} by default.
+     *
+     * @param entry stackEntry being labeled
+     * @return formatted string label
+     */
+    public String getStackLabel(StackEntry entry) {
+        return getFormattedValue(entry.getMax());
     }
 
 }
