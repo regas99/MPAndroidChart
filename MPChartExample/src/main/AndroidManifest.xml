@@ -53,6 +53,7 @@
         <activity android:name="HighlightBubbleChart" />
         <activity android:name="AxisHighlightBubbleChartActivity" />
         <activity android:name=".HighlightMapActivity" />
+        <activity android:name="StackChartActivity" />
     </application>
 
 </manifest>

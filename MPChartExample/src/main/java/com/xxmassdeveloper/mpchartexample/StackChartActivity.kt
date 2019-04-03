@@ -1,0 +1,337 @@
+package com.xxmassdeveloper.mpchartexample
+
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.SimpleHourFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.highlight.StackHighlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.xxmassdeveloper.mpchartexample.custom.StackMarkerView
+import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase
+import kotlinx.android.synthetic.main.activity_stackchart.*
+
+/**
+ * A simple Stack Chart Example
+ */
+class StackChartActivity : DemoBase() {
+    private val chartMin = 8f    // 9:00AM
+    private val chartMax = 17f   // 5:00 PM
+
+    val labels = arrayOf("Entry 1", "Entry 2", "Entry 3", "Entry 4")
+    val colors = IntArray(16)
+    val yFormatter = SimpleHourFormatter()
+    val xFormatter = IndexAxisValueFormatter(labels)
+
+    var logEnabled = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        setContentView(R.layout.activity_stackchart)
+        title = "StackChartActivity"
+
+        // hide the seek bars, etc, which are not used in this activity
+        seek_group.visibility = View.GONE
+
+        // build colors
+        System.arraycopy(ColorTemplate.MATERIAL_COLORS_16, 0, colors, 0, 16)
+
+        // build marker view to display on highlight
+        val markerView = StackMarkerView(this, R.layout.custom_marker_stackchart)
+
+        with(chart) {
+            isLogEnabled = true
+            setBackgroundColor(android.graphics.Color.WHITE)
+            description.isEnabled = false
+            legend.isEnabled = false
+            setMaxVisibleValueCount(60)
+            setPinchZoom(false)
+            setDrawGridBackground(false)
+            setTouchEnabled(true)
+            markerView.chartView = this
+            marker = markerView
+            this.setOnChartValueSelectedListener(valueSelectedListener)
+
+            with (renderer) {
+                paintValues.color = Color.BLUE
+                paintValues.textSize = 20f
+            }
+
+            with(xAxis!!) {
+                position = BOTTOM
+                setDrawGridLines(false)
+                granularity = 1f
+                valueFormatter = xFormatter
+                textSize = 15f
+                extraBottomOffset = 10f
+            }
+            with(rendererXAxis) {
+                setHighlightTextColor(Color.RED)
+                setHighlightFillColor(Color.BLACK)
+            }
+
+            with(axisLeft) {
+                // set axis label count to 1 + the number of hours displayed
+                val range = Math.ceil(chartMax.toDouble()) - Math.floor(chartMin.toDouble())
+                setLabelCount(range.toInt() + 1, true)
+                setDrawGridLines(true)
+                setDrawAxisLine(true)
+                axisMinimum = chartMin
+                axisMaximum = chartMax
+                valueFormatter = yFormatter
+            }
+
+            axisRight.isEnabled = false
+
+        }
+        val data = makeData()
+        data.valueFormatter = yFormatter
+        displayData(data)
+    }
+
+    /**
+     * Makes labels.size StackUnits with pre-defined data, then as many
+     * additional randomized units as needed
+     */
+    private fun makeData(): StackDataSet {
+
+        val star = if (Build.VERSION.SDK_INT >= 21)
+                                resources.getDrawable(R.drawable.star, theme)
+                            else resources.getDrawable(R.drawable.star)
+        val plus = if (Build.VERSION.SDK_INT >= 21)
+                                resources.getDrawable(R.drawable.plus, theme)
+                            else resources.getDrawable(R.drawable.plus)
+        val launch = if (Build.VERSION.SDK_INT >= 21)
+                                resources.getDrawable(R.drawable.ic_launcher, theme)
+                             else resources.getDrawable(R.drawable.ic_launcher)
+
+        val entries: MutableList<StackEntry> = mutableListOf()
+        var colorIndex = 0
+        for (i in 0 until labels.size) {
+            val x = i.toFloat()
+            val entry = when (i) {
+                0 -> {  // one unit, one item
+                    val item = StackItem(x, 10f, 14f, colors[colorIndex++], icon = star)
+                    val unit = StackUnit(9f, 15f, item)
+                    unit.drawShadows = false  // TODO
+                    StackEntry(x, 8f, 16f, unit, icon = launch, shadowColor = Color.GREEN)
+                }
+
+                1 -> { // one unit, two items
+                    val items: MutableList<StackItem> = mutableListOf()
+                    items.add(StackItem(x, 9.333f, 10f, colors[colorIndex++], icon = star))
+                    items.add(StackItem(x, 10.33333f, 12.3f, colors[colorIndex++], icon = star))
+                    items.add(StackItem(x, 13.3f, 14.2f, colors[colorIndex++], icon = star))
+                    val unit = StackUnit(9f, 15.23f, items, icon = plus)
+                    StackEntry(x, 8.5f, 15.64f, unit, icon = launch)
+                }
+
+                2 -> {  // two units, multiple items
+                    val units = mutableListOf<StackUnit>()
+                    // AM only
+                    val amItems: MutableList<StackItem> = mutableListOf()
+                    amItems.add(StackItem(x, 8.1f, 8.75f, colors[colorIndex++], icon = star))
+                    amItems.add(StackItem(x, 9.25f, 10.3f, colors[colorIndex++], icon = star))
+                    amItems.add(StackItem(x, 10.5f, 11.333f, colors[colorIndex++], icon = star))
+                    units.add(StackUnit(8f, 12f, items = amItems, icon = plus))
+                    // PM only
+                    val pmItems: MutableList<StackItem> = mutableListOf()
+                    pmItems.add(StackItem(x, 13f, 14.1f, colors[colorIndex++], icon = star))
+                    pmItems.add(StackItem(x, 15.25f, 16.3f, colors[colorIndex++], icon = star))
+                    pmItems.add(StackItem(x, 16.5f, 16.8f, colors[colorIndex++], icon = star))
+                    units.add(StackUnit(13f, 17f, items = pmItems, icon = plus))
+                    StackEntry(x, 8f, 17f, units, icon = launch)
+                }
+
+                3 -> {  // item extends past unit - should this be allowed?
+                    val items: MutableList<StackItem> = mutableListOf()
+                    items.add(StackItem(x, 9.125f, 11.3f, colors[colorIndex++], icon = star))
+                    items.add(StackItem(x, 12.25f, 15.9f, colors[colorIndex++], icon = star))
+                    StackEntry(x, 10f, 13f, StackUnit(8f, 16.25f, items, icon = plus), icon = launch)
+                }
+                else -> {
+                    val items: MutableList<StackItem> = mutableListOf()
+                    val range = chartMax - chartMin
+                    val points = List(4 * 2 + 2) { Math.random() * range - chartMin }
+                    val sorted = points.sorted()
+                    val low = sorted[0].toFloat()
+                    val high = sorted.last().toFloat()
+                    for (i in 0 until points.size step 2) {
+                        val color = colors[(i + i) % 15]
+                        val bottom = sorted[i].toFloat()
+                        val top = sorted[i + 1].toFloat()
+                        val item = StackItem(x, bottom, top, color)
+                        items.add(item)
+                    }
+                    StackEntry(x, Math.min(low - 1, chartMin), Math.max(high + 1, chartMax), StackUnit(low, high, items))
+                }
+            }
+
+            entry.icon = ContextCompat.getDrawable(this, R.drawable.star)
+
+            entry.units.map { unit ->
+                unit.drawShadows = true
+                unit.items.map { item ->
+                    item.drawIcon = true
+                    item.icon = ContextCompat.getDrawable(this, R.drawable.plus)
+                }
+            }
+            entries.add(entry)
+        }
+        return StackDataSet(chartMin, chartMax, entries, "label")
+    }
+
+    private fun displayData(set: StackDataSet) {
+        with(set) {
+            axisDependency = YAxis.AxisDependency.LEFT
+            setDrawIcons(true)
+        }
+        val data = StackData(set)
+        chart.data = data
+        chart.invalidate()
+    }
+
+    private val valueSelectedListener = object : OnChartValueSelectedListener {
+        override fun onValueSelected(e: Entry?, h: Highlight) {
+            val hl = h as StackHighlight
+
+            with(hl) {
+                when {
+                    itemIndex >= 0 ->
+                    Log.i("StackChartActivity", "onValueSelected - highlight item")
+                    unitIndex >= 0 ->
+                    Log.i("StackChartActivity", "onValueSelected - highlight unit")
+                    entryIndex >= 0 ->
+                    Log.i("StackChartActivity", "onValueSelected - highlight entry")
+                    else ->
+                    Log.i("StackChartActivity", "onValueSelected - no indices!")
+                }
+            }
+        }
+
+        override fun onNothingSelected() {
+            Log.e("StackChartActivity", "onNothingSelected")
+            //restoreChart()
+            // undoXHighlight()
+        }
+    }
+
+    override fun saveToGallery() {
+        saveToGallery(chart, "StackChartActivity")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.stack, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+
+            R.id.drawEntryShadowValues ->
+                chart.data.sets.map { it.entries.map {
+                    it.drawValues = ! it.drawValues
+                }}
+
+            R.id.toggleEntryShadow ->
+                chart.data.sets.map { it.entries.map { it.drawShadow = ! it.drawShadow}}
+
+            R.id.toggleEntryCap ->
+                chart.data.sets.map { it.entries.map { it.drawShadowCaps = ! it.drawShadowCaps}}
+
+            R.id.toggleUnitShadowValues ->
+                chart.data.sets.map { it.entries.map { it.units.map {
+                    it.drawValues = ! it.drawValues
+                }}}
+
+            R.id.toggleUnitShadow ->
+                chart.data.sets.map { it.entries.map { it.units.map {
+                    it.drawShadows = ! it.drawShadows
+                }}}
+
+            R.id.toggleUnitCap ->
+                chart.data.sets.map { it.entries.map { it.units.map {
+                    it.drawShadowCaps = ! it.drawShadowCaps
+                }}}
+
+            R.id.actionToggleSetIcons -> {
+                for (set in chart.data.dataSets)
+                    set.setDrawValues(!set.isDrawValuesEnabled)
+            }
+
+            R.id.toggleItemValues ->
+                chart.data.sets.map { it.entries.map { it.units.map {
+                    it.elements.map { (it as StackItem).drawValues = it.drawValues }
+                }}}
+
+
+            R.id.actionToggleIcons -> {
+                for (set in chart.data.dataSets)
+                    set.setDrawIcons(!set.isDrawIconsEnabled)
+
+                chart.invalidate()
+            }
+            R.id.actionToggleHighlight -> {
+                if (chart.data != null) {
+                    chart.data.isHighlightEnabled = !chart.data.isHighlightEnabled
+                    chart.invalidate()
+                }
+            }
+            R.id.actionTogglePinch -> {
+                if (chart.isPinchZoomEnabled)
+                    chart.setPinchZoom(false)
+                else
+                    chart.setPinchZoom(true)
+
+                chart.invalidate()
+            }
+            R.id.actionToggleAutoScaleMinMax -> {
+                chart.isAutoScaleMinMaxEnabled = !chart.isAutoScaleMinMaxEnabled
+                chart.notifyDataSetChanged()
+            }
+            R.id.actionToggleBarBorders -> {
+                for (set in chart.data.dataSets)
+                    (set as BarDataSet).barBorderWidth = if (set.barBorderWidth == 1f) 0f else 1f
+
+                chart.invalidate()
+            }
+            R.id.animateX -> {
+                chart.animateX(2000)
+            }
+            R.id.animateY -> {
+                chart.animateY(2000)
+            }
+            R.id.animateXY -> {
+                chart.animateXY(2000, 2000)
+            }
+            R.id.actionSave -> {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    saveToGallery()
+                } else {
+                    requestStoragePermission(chart)
+                }
+                return true
+            }
+        }
+        chart.invalidate()
+        return true
+    }
+
+
+}

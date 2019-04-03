@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/toggleEntryShadow"
+        android:title="Entry: Toggle Shadows" />
+    <item
+        android:id="@+id/toggleEntryCap"
+        android:title="Entry: Toggle Shadow Caps" />
+    <item
+        android:id="@+id/drawEntryShadowValues"
+        android:title="Entry: Toggle Shadow Values"/>
+
+
+
+    <item
+        android:id="@+id/toggleUnitShadow"
+        android:title="Unit: Toggle Shadows" />
+    <item
+        android:id="@+id/toggleUnitCap"
+        android:title="Unit: Toggle Shadow Caps" />
+    <item
+        android:id="@+id/toggleUnitShadowValues"
+        android:title="Unit: Toggle Shadow Values" />
+
+    <item
+        android:id="@+id/toggleItemValues"
+        android:title="Item: Toggle Values" />
+
+    <item
+        android:id="@+id/toggleItemBorders"
+        android:title="Item: Toggle Borders" />
+    
+    <item
+        android:id="@+id/actionToggleSetIcons"
+        android:title="Set: Toggle Icons" />
+    <item
+        android:id="@+id/actionToggleEntryIcons"
+        android:title="Entry: Toggle Icons" />
+    <item
+        android:id="@+id/actionToggleUnitIcons"
+        android:title="Unit: Toggle Icons" />
+    <item
+        android:id="@+id/actionToggleItemIcons"
+        android:title="Item: Toggle Icons" />
+    
+    <item
+        android:id="@+id/actionSave"
+        android:title="@string/actionSave" />
+
+
+</menu>
