@@ -1,5 +1,7 @@
 package com.github.mikephil.charting.utils
 
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.RectF
 import android.util.Log
 import com.github.mikephil.charting.interfaces.IHasMinMax
@@ -28,6 +30,30 @@ fun MPPointD.recycle() {
 fun MPPointF.recycle() {
     MPPointF.recycleInstance(this)
 }
+
+// clip drawing to edges of chart
+fun RectF.clipToViewPort(handler: ViewPortHandler) {
+    left = Math.max(left, handler.contentLeft())
+    top = Math.max(top, handler.contentTop())
+    right = Math.min(right, handler.contentRight())
+    bottom = Math.min(bottom, handler.contentBottom())
+}
+
+// reduce rectangle size by pix to prevent rounded rect from bleeding beyond edges
+fun RectF.shrinkBy(pix: Float) : RectF {
+    return RectF(left + pix, top - pix, right - pix, bottom + pix)
+}
+
+// move a rectangle up by pix
+fun RectF.upBy(pix: Float) : RectF {
+    return RectF(left, top + pix, right, bottom + pix)
+}
+
+// move a rectangle down by pix
+fun RectF.downBy(pix: Float) : RectF {
+    return RectF(left, top - pix, right, bottom - pix)
+}
+
 
 /**
  * Runs a binary search to find the IHasMinMax instance containing target.

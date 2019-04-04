@@ -14,6 +14,13 @@ import android.view.View;
 public class ViewPortHandler {
 
     /**
+     * Enum to indicate out-of-bounds conditions. Not widely used (only in StackChart) so far.
+     */
+    public enum OutOfBounds {
+        OFF_SCREEN_RIGHT, OFF_SCREEN_LEFT, OFF_SCREEN_TOP, OFF_SCREEN_BOTTOM, ON_SCREEN
+    }
+
+    /**
      * matrix used for touch events
      */
     protected final Matrix mMatrixTouch = new Matrix();
