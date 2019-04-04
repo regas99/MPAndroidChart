@@ -17,7 +17,26 @@ public class Highlight {
      * NULL replaces highlight == null, ala kotlin.
      */
     public enum Type {
-        VALUE, X_AXIS, LEFT_AXIS, RIGHT_AXIS, NULL
+        VALUE, X_AXIS, LEFT_AXIS, RIGHT_AXIS, NULL;
+
+        public boolean isValue() {
+            return this == VALUE;
+        }
+        public boolean isAxis() {
+            return this == X_AXIS || this == LEFT_AXIS || this == RIGHT_AXIS;
+        }
+        public boolean isXAxis() {
+            return this == X_AXIS;
+        }
+        public boolean isLeftAxis() {
+            return this == LEFT_AXIS;
+        }
+        public boolean isRightAxis() {
+            return this == RIGHT_AXIS;
+        }
+        public boolean isNull() {
+            return this == NULL;
+        }
     }
 
     /**

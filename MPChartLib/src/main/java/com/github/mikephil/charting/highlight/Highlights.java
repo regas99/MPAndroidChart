@@ -31,9 +31,13 @@ public class Highlights implements Iterable<Highlight> {
      * To support legacy code using Highlight[] for value highlights.
      *
      * @param ary
+     * @deprecated use Highlights() and highlights.add(highlight) or add(highlights)
      */
+    @Deprecated
     public Highlights(Highlight[] ary) {
-        for (Highlight h : ary) {
+        if (ary == null)
+            clear();
+        else for (Highlight h : ary) {
             add(h);
         }
     }
