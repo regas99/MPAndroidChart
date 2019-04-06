@@ -45,6 +45,7 @@ import com.xxmassdeveloper.mpchartexample.RealtimeLineChartActivity;
 import com.xxmassdeveloper.mpchartexample.ScatterChartActivity;
 import com.xxmassdeveloper.mpchartexample.ScrollViewActivity;
 import com.xxmassdeveloper.mpchartexample.StackChartActivity;
+import com.xxmassdeveloper.mpchartexample.StackChartDayActivity;
 import com.xxmassdeveloper.mpchartexample.StackedBarActivity;
 import com.xxmassdeveloper.mpchartexample.StackedBarActivityNegative;
 import com.xxmassdeveloper.mpchartexample.fragments.SimpleChartDemo;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
         addHeader("Stack Charts");
         addExample("Basic","Simple Stack Chart", StackChartActivity.class);
+        addExample("Day Chart", "Day Stack Chart", StackChartDayActivity.class);
 
         addHeader("Highlight Axes");
         addExample("Bubble Chart", "Highlight in two lines of code", HighlightBubbleChart.class);
