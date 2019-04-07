@@ -8,6 +8,7 @@
     <string name="viewWebsite">Developer Website</string>
     <string name="actionSave">Save to Gallery</string>
 
+    <string name="animate">Animate</string>
     <string name="animateX">Animate X</string>
     <string name="animateY">Animate Y</string>
     <string name="animateXY">Animate XY</string>
@@ -51,5 +52,16 @@
     <string name="dash">-</string>
     <string name="scrollViewStart">START OF SCROLLVIEW</string>
     <string name="scrollViewEnd">END OF SCROLLVIEW</string>
+    
+    // Stack Chart
+    <string name="display_values">Display Values</string>
+    <string name="display_icons">Display Icons</string>
+    <string name="display_shadows">Display Shadows</string>
+    <string name="display_caps">Display Shadow Caps</string>
+    <string name="display_borders">Display Borders</string>
+
+    <string name="stack_entry">Stack Entry</string>
+    <string name="stack_unit">Stack Unit</string>
+    <string name="stack_item">Stack Item</string>
 
 </resources>

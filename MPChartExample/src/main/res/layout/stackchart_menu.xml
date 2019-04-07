@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/display_values"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/display_values"/>
+
+    <include layout="@layout/stackchart_chipgroup_EUI"/>
+
+    <TextView
+        android:id="@+id/display_icons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/display_icons"/>
+
+    <include layout="@layout/stackchart_chipgroup_EUI"/>
+
+    <TextView
+        android:id="@+id/display_shadows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/display_shadows"/>
+
+    <include layout="@layout/stackchart_chipgroup_EU"/>
+
+    <TextView
+        android:id="@+id/display_borders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/display_borders"/>
+
+    <include layout="@layout/stackchart_chipgroup_I"/>
+
+    <TextView
+        android:id="@+id/animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/animate"/>
+
+    <include layout="@layout/animate_chipgroup"/>
+
+
+
+</LinearLayout>
