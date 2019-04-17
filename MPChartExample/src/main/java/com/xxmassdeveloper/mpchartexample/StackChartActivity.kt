@@ -113,154 +113,142 @@ class StackChartActivity : DemoBase() {
      * Makes labels.size StackUnits with pre-defined data, then as many
      * additional randomized units as needed
      */
-    private fun makeData(): StackDataSet {
-
-        val star = if (Build.VERSION.SDK_INT >= 21)
-            resources.getDrawable(R.drawable.star, theme)
-        else resources.getDrawable(R.drawable.star)
-        val plus = if (Build.VERSION.SDK_INT >= 21)
-            resources.getDrawable(R.drawable.plus, theme)
-        else resources.getDrawable(R.drawable.plus)
-        val launch = if (Build.VERSION.SDK_INT >= 21)
-            resources.getDrawable(R.drawable.ic_launcher, theme)
-        else resources.getDrawable(R.drawable.ic_launcher)
-
-        val entries: MutableList<StackEntry> = mutableListOf()
-        var colorIndex = 0
-        for (i in 0 until labels.size) {
-            val x = i.toFloat()
-            val entry = when (i) {
-                0 -> {  // one unit, one item
-                    val item = StackItem(x, 10f, 14f, colors[colorIndex++], icon = star)
-                    val unit = StackUnit(9f, 15f, item)
-                    unit.drawShadows = false  // TODO
-                    StackEntry(x, 8f, 16f, unit, icon = launch, shadowColor = Color.GREEN)
-                }
-
-                1 -> { // one unit, two items
-                    val items: MutableList<StackItem> = mutableListOf()
-                    items.add(StackItem(x, 9.333f, 10f, colors[colorIndex++], icon = star))
-                    items.add(StackItem(x, 10.33333f, 12.3f, colors[colorIndex++], icon = star))
-                    items.add(StackItem(x, 13.3f, 14.2f, colors[colorIndex++], icon = star))
-                    val unit = StackUnit(9f, 15.23f, items, icon = plus)
-                    StackEntry(x, 8.5f, 15.64f, unit, icon = launch)
-                }
-
-                2 -> {  // two units, multiple items
-                    val units = mutableListOf<StackUnit>()
-                    // AM only
-                    val amItems: MutableList<StackItem> = mutableListOf()
-                    amItems.add(StackItem(x, 8.1f, 8.75f, colors[colorIndex++], icon = star))
-                    amItems.add(StackItem(x, 9.25f, 10.3f, colors[colorIndex++], icon = star))
-                    amItems.add(StackItem(x, 10.5f, 11.333f, colors[colorIndex++], icon = star))
-                    units.add(StackUnit(8f, 12f, items = amItems, icon = plus))
-                    // PM only
-                    val pmItems: MutableList<StackItem> = mutableListOf()
-                    pmItems.add(StackItem(x, 13f, 14.1f, colors[colorIndex++], icon = star))
-                    pmItems.add(StackItem(x, 15.25f, 16.3f, colors[colorIndex++], icon = star))
-                    pmItems.add(StackItem(x, 16.5f, 16.8f, colors[colorIndex++], icon = star))
-                    units.add(StackUnit(13f, 17f, items = pmItems, icon = plus))
-                    StackEntry(x, 8f, 17f, units, icon = launch)
-                }
-
-                3 -> {  // item extends past unit - should this be allowed?
-                    val items: MutableList<StackItem> = mutableListOf()
-                    items.add(StackItem(x, 9.125f, 11.3f, colors[colorIndex++], icon = star))
-                    items.add(StackItem(x, 12.25f, 15.9f, colors[colorIndex++], icon = star))
-                    StackEntry(x, 10f, 13f, StackUnit(8f, 16.25f, items, icon = plus), icon = launch)
-                }
-                else -> {
-                    val items: MutableList<StackItem> = mutableListOf()
-                }
-            }
-        }
-        return StackDataSet(chartMin, chartMax, entries, "label")
-    }
-
-//    private fun makeData() : StackDataSet {
-//        val entries : MutableList<StackEntry> = mutableListOf()
-//        val units : MutableList<StackUnit> = mutableListOf()
+//    private fun makeData(): StackDataSet {
+//
+//        val star = if (Build.VERSION.SDK_INT >= 21)
+//            resources.getDrawable(R.drawable.star, theme)
+//        else resources.getDrawable(R.drawable.star)
+//        val plus = if (Build.VERSION.SDK_INT >= 21)
+//            resources.getDrawable(R.drawable.plus, theme)
+//        else resources.getDrawable(R.drawable.plus)
+//        val launch = if (Build.VERSION.SDK_INT >= 21)
+//            resources.getDrawable(R.drawable.ic_launcher, theme)
+//        else resources.getDrawable(R.drawable.ic_launcher)
+//
+//        val entries: MutableList<StackEntry> = mutableListOf()
 //        var colorIndex = 0
-//        for (x in 0 until labels.size) {
-//            val entry = when (x) {
-//                0 -> {
-//                    val items : MutableList<StackItem> = mutableListOf()
-//                    items.add(StackItem(x.toFloat(), 9.333f, 10f, colors[colorIndex++]))
-//                    items.add(StackItem(x.toFloat(), 10.33333f, 12.3f, colors[colorIndex++]))
-//                    items.add(StackItem(x.toFloat(), 13.3f, 14.2f, colors[colorIndex++]))
-//                    StackEntry(0f, 8.5f, 15.64f, StackUnit(9f, 15.23f, items))
+//        for (i in 0 until labels.size) {
+//            val x = i.toFloat()
+//            val entry = when (i) {
+//                0 -> {  // one unit, one item
+//                    val item = StackItem(x, 10f, 14f, colors[colorIndex++], icon = star)
+//                    val unit = StackUnit(9f, 15f, item)
+//                    unit.drawShadows = false
+//                    StackEntry(x, 8f, 16f, unit, icon = launch, shadowColor = Color.GREEN)
 //                }
-//                1 -> {  // two StackUnit's
+//
+//                1 -> { // one unit, two items
+//                    val items: MutableList<StackItem> = mutableListOf()
+//                    items.add(StackItem(x, 9.333f, 10f, colors[colorIndex++], icon = star))
+//                    items.add(StackItem(x, 10.33333f, 12.3f, colors[colorIndex++], icon = star))
+//                    items.add(StackItem(x, 13.3f, 14.2f, colors[colorIndex++], icon = star))
+//                    val unit = StackUnit(9f, 15.23f, items, icon = plus)
+//                    StackEntry(x, 8.5f, 15.64f, unit, icon = launch)
+//                }
+//
+//                2 -> {  // two units, multiple items
 //                    val units = mutableListOf<StackUnit>()
 //                    // AM only
-//                    val amItems : MutableList<StackItem> = mutableListOf()
-//                    amItems.add(StackItem(x.toFloat(), 8.1f, 8.75f, colors[colorIndex++]))
-//                    amItems.add(StackItem(x.toFloat(), 9.25f, 10.3f, colors[colorIndex++]))
-//                    amItems.add(StackItem(x.toFloat(), 10.5f, 11.333f, colors[colorIndex++]))
-//                    units.add(StackUnit(8f, 12f, amItems))
+//                    val amItems: MutableList<StackItem> = mutableListOf()
+//                    amItems.add(StackItem(x, 8.1f, 8.75f, colors[colorIndex++], icon = star))
+//                    amItems.add(StackItem(x, 9.25f, 10.3f, colors[colorIndex++], icon = star))
+//                    amItems.add(StackItem(x, 10.5f, 11.333f, colors[colorIndex++], icon = star))
+//                    units.add(StackUnit(8f, 12f, items = amItems, icon = plus))
 //                    // PM only
-//                    val pmItems : MutableList<StackItem> = mutableListOf()
-//                    pmItems.add(StackItem(x.toFloat(), 13f, 14.1f, colors[colorIndex++]))
-//                    pmItems.add(StackItem(x.toFloat(), 15.25f, 16.3f, colors[colorIndex++]))
-//                    pmItems.add(StackItem(x.toFloat(), 16.5f, 16.8f, colors[colorIndex++]))
-//                    units.add(StackUnit(13f, 17f, pmItems))
-//                    StackEntry(1f, 8f, 17f, units)
+//                    val pmItems: MutableList<StackItem> = mutableListOf()
+//                    pmItems.add(StackItem(x, 13f, 14.1f, colors[colorIndex++], icon = star))
+//                    pmItems.add(StackItem(x, 15.25f, 16.3f, colors[colorIndex++], icon = star))
+//                    pmItems.add(StackItem(x, 16.5f, 16.8f, colors[colorIndex++], icon = star))
+//                    units.add(StackUnit(13f, 17f, items = pmItems, icon = plus))
+//                    StackEntry(x, 8f, 17f, units, icon = launch)
 //                }
-//                2 -> {
-//                    val item = StackItem(2f, 9f, 14f, colors[colorIndex++])
-//                    val unit = StackUnit(8f, 15f, item)
-//                    unit.drawShadows = false
-//                    StackEntry(x.toFloat(), 8f, 16f, unit)
-//                }
-//                3 -> {
-//                    val items : MutableList<StackItem> = mutableListOf()
-//                    items.add(StackItem(x.toFloat(), 9.125f, 11.3f, colors[colorIndex++]))
-//                    items.add(StackItem(x.toFloat(), 12.25f, 15.9f, colors[colorIndex++]))
-//                    StackEntry(x.toFloat(), 8.125f, 17f, StackUnit(8f, 16.25f, items))
+//
+//                3 -> {  // item extends past unit - should this be allowed?
+//                    val items: MutableList<StackItem> = mutableListOf()
+//                    items.add(StackItem(x, 9.125f, 11.3f, colors[colorIndex++], icon = star))
+//                    items.add(StackItem(x, 12.25f, 15.9f, colors[colorIndex++], icon = star))
+//                    StackEntry(x, 10f, 13f, StackUnit(8f, 16.25f, items, icon = plus), icon = launch)
 //                }
 //                else -> {
-//                    val items : MutableList<StackItem> = mutableListOf()
-//                    val range = chartMax - chartMin
-//                    val points = List(4 * 2 + 2) { Math.random() * range - chartMin }
-//                    val sorted = points.sorted()
-//                    val low = sorted[0].toFloat()
-//                    val high = sorted.last().toFloat()
-//                    for (i in 0 until points.size step 2) {
-//                        val color = colors[(i + i) % 15]
-//                        val bottom = sorted[i].toFloat()
-//                        val top = sorted[i + 1].toFloat()
-//                        val item = StackItem(x, bottom, top, color)
-//                        items.add(item)
-//                    }
-//                    StackEntry(x, Math.min(low - 1, chartMin), Math.max(high + 1, chartMax), StackUnit(low, high, items))
-//                        val color = colors[(x + i) % 15]
-//                        val bottom = sorted[i].toFloat()
-//                        val top = sorted[i + 1].toFloat()
-//                        val item = StackItem(x.toFloat(), bottom, top, color)
-//                        items.add(item)
-//                    }
-//                    StackEntry(x.toFloat(), Math.min(low - 1, chartMin), Math.max(high + 1, chartMax), StackUnit(low, high, items))
+//                    val items: MutableList<StackItem> = mutableListOf()
 //                }
 //            }
-//
-//            entry.icon = ContextCompat.getDrawable(this, R.drawable.star)
-//
-//            entry.units.map { unit ->
-//                unit.drawShadows = true
-//                unit.items.map { item ->
-//                    item.drawIcon = true
-//                    item.icon = ContextCompat.getDrawable(this, R.drawable.plus)
-//                }
-//            }
-//            entries.add(entry)
-//                item.drawIcon = true
-//                item.icon = ContextCompat.getDrawable(this, R.drawable.plus)
-//            }}
-//        entries.add(entry)
-//
 //        }
 //        return StackDataSet(chartMin, chartMax, entries, "label")
 //    }
+
+    private fun makeData() : StackDataSet {
+        val entries : MutableList<StackEntry> = mutableListOf()
+        val units : MutableList<StackUnit> = mutableListOf()
+        var colorIndex = 0
+        for (x in 0 until labels.size) {
+            val entry = when (x) {
+                0 -> {
+                    val items : MutableList<StackItem> = mutableListOf()
+                    items.add(StackItem(x.toFloat(), 9.333f, 10f, colors[colorIndex++]))
+                    items.add(StackItem(x.toFloat(), 10.33333f, 12.3f, colors[colorIndex++]))
+                    items.add(StackItem(x.toFloat(), 13.3f, 14.2f, colors[colorIndex++]))
+                    StackEntry(0f, 8.5f, 15.64f, StackUnit(9f, 15.23f, items))
+                }
+                1 -> {  // two StackUnit's
+                    val units = mutableListOf<StackUnit>()
+                    // AM only
+                    val amItems : MutableList<StackItem> = mutableListOf()
+                    amItems.add(StackItem(x.toFloat(), 8.1f, 8.75f, colors[colorIndex++]))
+                    amItems.add(StackItem(x.toFloat(), 9.25f, 10.3f, colors[colorIndex++]))
+                    amItems.add(StackItem(x.toFloat(), 10.5f, 11.333f, colors[colorIndex++]))
+                    units.add(StackUnit(8f, 12f, amItems))
+                    // PM only
+                    val pmItems : MutableList<StackItem> = mutableListOf()
+                    pmItems.add(StackItem(x.toFloat(), 13f, 14.1f, colors[colorIndex++]))
+                    pmItems.add(StackItem(x.toFloat(), 15.25f, 16.3f, colors[colorIndex++]))
+                    pmItems.add(StackItem(x.toFloat(), 16.5f, 16.8f, colors[colorIndex++]))
+                    units.add(StackUnit(13f, 17f, pmItems))
+                    StackEntry(1f, 8f, 17f, units)
+                }
+                2 -> {
+                    val item = StackItem(2f, 9f, 14f, colors[colorIndex++])
+                    val unit = StackUnit(8f, 15f, item)
+                    unit.drawShadows = false
+                    StackEntry(x.toFloat(), 8f, 16f, unit)
+                }
+                3 -> {
+                    val items : MutableList<StackItem> = mutableListOf()
+                    items.add(StackItem(x.toFloat(), 9.125f, 11.3f, colors[colorIndex++]))
+                    items.add(StackItem(x.toFloat(), 12.25f, 15.9f, colors[colorIndex++]))
+                    StackEntry(x.toFloat(), 8.125f, 17f, StackUnit(8f, 16.25f, items))
+                }
+                else -> {
+                    val items : MutableList<StackItem> = mutableListOf()
+                    val range = chartMax - chartMin
+                    val points = List(4 * 2 + 2) { Math.random() * range - chartMin }
+                    val sorted = points.sorted()
+                    val low = sorted[0].toFloat()
+                    val high = sorted.last().toFloat()
+                    for (i in 0 until points.size step 2) {
+                        val color = colors[(i + i) % 15]
+                        val bottom = sorted[i].toFloat()
+                        val top = sorted[i + 1].toFloat()
+                        val item = StackItem(x.toFloat(), bottom, top, color)
+                        items.add(item)
+                    }
+                    StackEntry(x.toFloat(), Math.min(low - 1, chartMin), Math.max(high + 1, chartMax), StackUnit(low, high, items))
+                }
+            }
+
+            entry.icon = ContextCompat.getDrawable(this, R.drawable.star)
+
+            entry.units.map { unit ->
+                unit.drawShadows = true
+                unit.items.map { item ->
+                    item.drawIcon = true
+                    item.icon = ContextCompat.getDrawable(this, R.drawable.plus)
+                }
+            }
+            entries.add(entry)
+        }
+        return StackDataSet(chartMin, chartMax, entries, "label")
+    }
 
     private fun displayData(set : StackDataSet) {
         with (set) {
