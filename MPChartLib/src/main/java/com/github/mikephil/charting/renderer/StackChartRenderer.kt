@@ -251,6 +251,8 @@ class StackChartRenderer(val chart : StackDataProvider,
         chart.data.dataSets.map set@{ set ->
             if (set.isDrawValuesEnabled && shouldDrawValues(set))
                 (set as IStackDataSet).drawValues(c)
+            if (set.isDrawIconsEnabled)
+                (set as IStackDataSet).drawIcons(c)
         }
     }
 
@@ -348,27 +350,25 @@ class StackChartRenderer(val chart : StackDataProvider,
     /**
      * Draws all the icons on the chart - while checking for enable fields.
      */
-    private fun StackChart.drawIcons(c: Canvas) {
-        data.sets.map { set ->
+    private fun IStackDataSet.drawIcons(c: Canvas) {
 
-            // Set.drawIcons is a global control. Draw nothing if it is false.
-            if (!set.isDrawIconsEnabled) return@map
+        // Set.drawIcons is a global control. Draw nothing if it is false.
+        if (!isDrawIconsEnabled) return
 
-            val trans = chart.getTransformer(set.axisDependency)
+        val trans = chart.getTransformer(axisDependency)
 
-            // other drawIcons controls are local.
-            set.entries.map { entry ->
-                entry.units.map { unit ->
-                    unit.items.map { item ->
-                        if (item.drawIcon)
-                            item.drawIcon(trans, c)
-                    }
-                    if (unit.drawIcon)
-                        unit.drawIcon(trans, c)
-                    }
-                if (entry.drawIcon)
-                    entry.drawIcon(trans, set, c)
-            }
+        // other drawIcons controls are local.
+        entries.map { entry ->
+            entry.units.map { unit ->
+                unit.items.map { item ->
+                    if (item.drawIcon)
+                        item.drawIcon(trans, c)
+                }
+                if (unit.drawIcon)
+                    unit.drawIcon(trans, c)
+                }
+            if (entry.drawIcon)
+                entry.drawIcon(trans, this, c)
         }
     }
 
