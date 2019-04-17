@@ -55,6 +55,7 @@
         <activity android:name=".HighlightMapActivity" />
         <activity android:name="StackChartActivity" />
         <activity android:name=".StackChartDayActivity" />
+        <activity android:name="StackChartOverlapActivity" />
     </application>
 
 </manifest>
