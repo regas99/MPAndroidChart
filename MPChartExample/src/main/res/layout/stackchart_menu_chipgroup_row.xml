@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/chip_row_3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_weight="1"
+    android:weightSum="4"
+    android:text="@string/stack_entry"
+
+    >
+
+
+    <TextView
+        android:id="@+id/menu_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/display_values"
+        />
+
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/display_entry"
+        app:checkedIcon="@drawable/on"
+        app:chipIcon="@drawable/off"
+        style="@style/Widget.MaterialComponents.Chip.Filter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checkable="true"
+        android:checked="false"
+        android:text="@string/stack_entry" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/display_unit"
+        style="@style/Widget.MaterialComponents.Chip.Filter"
+        app:checkedIcon="@drawable/on"
+        app:chipIcon="@drawable/off"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checkable="true"
+        android:text="@string/stack_unit"
+        android:checked="true" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/display_item"
+        style="@style/Widget.MaterialComponents.Chip.Filter"
+        app:checkedIcon="@drawable/on"
+        app:chipIcon="@drawable/off"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checkable="true"
+        android:text="@string/stack_item" />
+
+
+</LinearLayout>

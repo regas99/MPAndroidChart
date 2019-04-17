@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stackChartScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    tools:layout_editor_absoluteY="81dp">
+
+    <com.github.mikephil.charting.charts.StackChart
+        android:id="@+id/chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:minWidth="250dp"
+        android:minHeight="250dp"
+        app:layout_constraintBottom_toTopOf="@+id/chips"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_weight="1"
+        />
+
+    <include
+        android:id="@+id/chips"
+        layout="@layout/stackchart_menu"
+        app:layout_constraintBottom_toTopOf="@+id/y_max_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chart"
+
+        />
+
+
+    <TextView
+        android:id="@+id/num_elements_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end|fill_horizontal"
+        android:minWidth="20dp"
+        android:text="@string/entries"
+        app:layout_constraintBottom_toBottomOf="@+id/num_elements_seek"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/num_elements_seek"
+        tools:layout_constraintVertical_chainStyle="packed"/>
+
+    <SeekBar
+        android:id="@+id/num_elements_seek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="4dp"
+        android:max="50"
+        android:min="1"
+        android:progress="8"
+        app:layout_constraintBottom_toTopOf="@+id/num_units_per_entry_seek"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:layout_constraintVertical_bias="1.0"
+        />
+
+    <TextView
+        android:id="@+id/y_max_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="fill_horizontal|end"
+        android:minWidth="40dp"
+        android:text="@string/max_y"
+        app:layout_constraintBottom_toBottomOf="@+id/y_max_et"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineCenter"/>
+
+    <EditText
+        android:id="@+id/y_max_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:autofillHints="set max Y"
+        android:focusable="false"
+        android:gravity="end"
+        android:hint="set max Y"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="2"
+        android:minWidth="40dp"
+        android:selectAllOnFocus="false"
+        android:singleLine="true"
+        android:text="maxY"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/y_min_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineRight"
+        app:layout_constraintTop_toBottomOf="@+id/chips"/>
+
+
+    <TextView
+        android:id="@+id/num_items_per_unit_tv"
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end|fill_horizontal"
+        android:minWidth="10dp"
+        android:text="Items Per Unit"
+        app:layout_constraintBottom_toBottomOf="@+id/num_items_per_unit_seek"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/num_items_per_unit_seek"
+        tools:layout_constraintVertical_chainStyle="packed"/>
+
+    <SeekBar
+        android:id="@+id/num_units_per_entry_seek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="4dp"
+        android:max="10"
+        android:min="1"
+        android:progress="2"
+        app:layout_constraintBottom_toTopOf="@+id/num_items_per_unit_seek"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/num_elements_seek"
+        />
+
+    <TextView
+        android:id="@+id/num_units_per_entry_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="end|fill_horizontal"
+        android:minWidth="40dp"
+        android:text="Units per Item"
+        app:layout_constraintBottom_toBottomOf="@+id/num_units_per_entry_seek"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/num_units_per_entry_seek"
+        tools:layout_constraintVertical_chainStyle="packed"/>
+
+    <SeekBar
+        android:id="@+id/num_items_per_unit_seek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:max="10"
+        android:min="1"
+        android:progress="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/num_units_per_entry_seek"
+        />
+
+
+    <TextView
+        android:id="@+id/y_min_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="end"
+        android:minWidth="40dp"
+        android:text="minY"
+        app:layout_constraintBottom_toBottomOf="@+id/y_min_et"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineCenter"
+        />
+
+    <EditText
+        android:id="@+id/y_min_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:autofillHints="set min Y"
+        android:focusable="false"
+        android:gravity="end"
+        android:hint="set min Y"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="2"
+        android:minWidth="40dp"
+        android:selectAllOnFocus="false"
+        android:singleLine="true"
+        android:text="minY"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelineRight"
+        app:layout_constraintTop_toBottomOf="@+id/y_max_et"
+        app:layout_constraintVertical_bias="1.0"
+        />
+
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/seek_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="num_elements_seek,num_units_per_entry_seek, num_units_per_entry_tv,
+            num_items_per_unit_seek, num_elements_tv, num_items_per_unit_tv, y_max_tv, y_min_tv,
+            y_min_et, y_max_et"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="108dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="311dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="258dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="423dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

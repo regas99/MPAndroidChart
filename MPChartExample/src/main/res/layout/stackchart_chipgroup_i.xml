@@ -4,10 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
 
-    android:id="@+id/value_group"
+    android:id="@+id/chipgroup_I"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/stack_entry"
+    android:text="@string/stack_item"
     android:layout_weight="1"
     tools:showIn="@layout/stackchart_menu">
 
@@ -16,19 +16,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-        <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:id="@+id/display_entry"
-            android:text="@string/stack_entry"
+        <TextView
+            android:id="@+id/menu_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="@string/display_values"/>
 
         <com.google.android.material.chip.Chip
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:id="@+id/display_unit"
-            android:text="@string/stack_unit"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:id="@+id/display_item"
+            android:text="@string/stack_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>

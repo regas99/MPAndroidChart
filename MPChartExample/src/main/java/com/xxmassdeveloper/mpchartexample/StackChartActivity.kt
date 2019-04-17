@@ -1,13 +1,10 @@
 package com.xxmassdeveloper.mpchartexample
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
@@ -21,8 +18,9 @@ import com.github.mikephil.charting.highlight.StackHighlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.xxmassdeveloper.mpchartexample.custom.StackMarkerView
+import com.xxmassdeveloper.mpchartexample.custom.alert.StackChartMenu
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase
-import kotlinx.android.synthetic.main.activity_stackchart.*
+import kotlinx.android.synthetic.main.xxx_activity_stackchart.*
 
 /**
  * A simple Stack Chart Example
@@ -35,6 +33,9 @@ class StackChartActivity : DemoBase() {
     val colors = IntArray(16)
     val yFormatter = SimpleHourFormatter()
     val xFormatter = IndexAxisValueFormatter(labels)
+
+    lateinit var optionsMenu: StackChartMenu
+    var firstMenuPass = false
 
     var logEnabled = true
 
@@ -236,102 +237,44 @@ class StackChartActivity : DemoBase() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.stack, menu)
+        Log.e("StackChartActivity", "onCreateOptionsMenu")
+        menuInflater.inflate(R.menu.foo, menu)  // have to inflate something to get the ...
+        firstMenuPass = true
+        optionsMenu = StackChartMenu(this, chart, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu) : Boolean {
 
-        when (item.itemId) {
-
-            R.id.drawEntryShadowValues ->
-                chart.data.sets.map { it.entries.map {
-                    it.drawValues = ! it.drawValues
-                }}
-
-            R.id.toggleEntryShadow ->
-                chart.data.sets.map { it.entries.map { it.drawShadow = ! it.drawShadow}}
-
-            R.id.toggleEntryCap ->
-                chart.data.sets.map { it.entries.map { it.drawShadowCaps = ! it.drawShadowCaps}}
-
-            R.id.toggleUnitShadowValues ->
-                chart.data.sets.map { it.entries.map { it.units.map {
-                    it.drawValues = ! it.drawValues
-                }}}
-
-            R.id.toggleUnitShadow ->
-                chart.data.sets.map { it.entries.map { it.units.map {
-                    it.drawShadows = ! it.drawShadows
-                }}}
-
-            R.id.toggleUnitCap ->
-                chart.data.sets.map { it.entries.map { it.units.map {
-                    it.drawShadowCaps = ! it.drawShadowCaps
-                }}}
-
-            R.id.actionToggleSetIcons -> {
-                for (set in chart.data.dataSets)
-                    set.setDrawValues(!set.isDrawValuesEnabled)
-            }
-
-            R.id.toggleItemValues ->
-                chart.data.sets.map { it.entries.map { it.units.map {
-                    it.elements.map { (it as StackItem).drawValues = it.drawValues }
-                }}}
-
-
-            R.id.actionToggleIcons -> {
-                for (set in chart.data.dataSets)
-                    set.setDrawIcons(!set.isDrawIconsEnabled)
-
-                chart.invalidate()
-            }
-            R.id.actionToggleHighlight -> {
-                if (chart.data != null) {
-                    chart.data.isHighlightEnabled = !chart.data.isHighlightEnabled
-                    chart.invalidate()
-                }
-            }
-            R.id.actionTogglePinch -> {
-                if (chart.isPinchZoomEnabled)
-                    chart.setPinchZoom(false)
-                else
-                    chart.setPinchZoom(true)
-
-                chart.invalidate()
-            }
-            R.id.actionToggleAutoScaleMinMax -> {
-                chart.isAutoScaleMinMaxEnabled = !chart.isAutoScaleMinMaxEnabled
-                chart.notifyDataSetChanged()
-            }
-            R.id.actionToggleBarBorders -> {
-                for (set in chart.data.dataSets)
-                    (set as BarDataSet).barBorderWidth = if (set.barBorderWidth == 1f) 0f else 1f
-
-                chart.invalidate()
-            }
-            R.id.animateX -> {
-                chart.animateX(2000)
-            }
-            R.id.animateY -> {
-                chart.animateY(2000)
-            }
-            R.id.animateXY -> {
-                chart.animateXY(2000, 2000)
-            }
-            R.id.actionSave -> {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    saveToGallery()
-                } else {
-                    requestStoragePermission(chart)
-                }
-                return true
-            }
+        if (firstMenuPass) {
+            firstMenuPass = false
+            return true
         }
-        chart.invalidate()
+
+        val set = chart.data.sets.firstOrNull()
+        val entry = set?.entries?.firstOrNull()
+        val unit = entry?.units?.firstOrNull()
+        val item = unit?.items?.firstOrNull()
+
+        //
+
+        optionsMenu.setDrawStates(StackChartMenu.GROUP.VALUES,
+                entry?.drawValues ?: false,
+                unit?.drawValues ?: false,
+                item?.drawValues ?: false)
+
+        optionsMenu.setDrawStates(StackChartMenu.GROUP.ICONS,
+                entry?.drawIcon ?: false,
+                unit?.drawIcon ?: false,
+                item?.drawIcon ?: false)
+
+        optionsMenu.setDrawStates(StackChartMenu.GROUP.SHADOWS,
+                entry?.drawShadow ?: false,
+                unit?.drawShadows ?: false,
+                false) //item?.drawShadow ?: false)
+
+        optionsMenu.showDialog()
         return true
     }
-
 
 }

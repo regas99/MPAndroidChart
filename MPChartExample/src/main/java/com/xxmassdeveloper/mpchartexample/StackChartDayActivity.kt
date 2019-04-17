@@ -25,7 +25,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.github.mikephil.charting.utils.pp
 import com.xxmassdeveloper.mpchartexample.custom.StackMarkerView
 import com.xxmassdeveloper.mpchartexample.notimportant.DemoBase
-import kotlinx.android.synthetic.main.activity_stackchart.*
+import kotlinx.android.synthetic.main.xxx_activity_stackchart.*
 
 class StackChartDayActivity : DemoBase(), OnChartValueSelectedListener, SeekBar.OnSeekBarChangeListener {
     private val title = "Stack Chart Day Activity"

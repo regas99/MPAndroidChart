@@ -54,14 +54,23 @@
     <string name="scrollViewEnd">END OF SCROLLVIEW</string>
     
     // Stack Chart
-    <string name="display_values">Display Values</string>
-    <string name="display_icons">Display Icons</string>
-    <string name="display_shadows">Display Shadows</string>
-    <string name="display_caps">Display Shadow Caps</string>
-    <string name="display_borders">Display Borders</string>
+    <string name="display_options">Display Options</string>
+    <string name="display_values">Values</string>
+    <string name="display_icons">Icons</string>
+    <string name="display_shadows">Shadows</string>
+    <string name="display_caps">hadow Caps</string>
+    <string name="display_borders">Borders</string>
 
-    <string name="stack_entry">Stack Entry</string>
-    <string name="stack_unit">Stack Unit</string>
-    <string name="stack_item">Stack Item</string>
+    <string name="stack_entry">Entry</string>
+    <string name="stack_unit">Unit</string>
+    <string name="stack_item">Item</string>
+    <string name="entries">Entries</string>
+    <string name="max_y">maxY</string>
+    <string name="set_max_y">set max Y</string>
+    <string name="items_per_unit">Items Per Unit</string>
+    <string name="units_per_item">Units per Item</string>
+    <string name="min_y">minY</string>
+    <string name="set_min_y">set min Y</string>
+    <string name="menu_group_tag">group</string>
 
 </resources>

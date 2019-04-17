@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- chip dimensions -->
+    <dimen name="chip_padding">12dp</dimen>
+    <dimen name="chip_icon_height">36dp</dimen>
+    <dimen name="chip_remove_icon_dimen">24dp</dimen>
+    <dimen name="chip_remove_icon_margin">4dp</dimen>
+    <dimen name="chip_deletable_padding">12dp</dimen>
+    <dimen name="chip_left_padding_filteer">8dp</dimen>
+    <dimen name="chip_right_padding_filter">12dp</dimen>
+</resources>

@@ -15,10 +15,10 @@ class StackChartMenuFragment() : Fragment() {
 
     lateinit var root: View
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (logEnabled) Log.i(TAG, "onCreateView")
-        root = inflater.inflate(R.layout.select_trip_types, container, false) as ViewGroup
-
-    }
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        if (logEnabled) Log.i(TAG, "onCreateView")
+//        root = inflater.inflate(R.layout.select_trip_types, container, false) as ViewGroup
+//
+//    }
 
 }
