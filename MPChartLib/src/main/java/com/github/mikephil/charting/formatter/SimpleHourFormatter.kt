@@ -15,10 +15,8 @@ import com.github.mikephil.charting.utils.pp
  *      27.3 % 24 -> 3.3 -> " 3:20AM"
  * Numbers smaller than zero return "00:00AM"
  */
-
 private const val LOG_TAG = "SimpleHourFormatter"
 private val logEnabled = false
-
 class SimpleHourFormatter : ValueFormatter() {
     override fun getFormattedValue(value: Float): String {
         if (value < 0) return "00:00AM"
@@ -39,6 +37,7 @@ class SimpleHourFormatter : ValueFormatter() {
      */
     fun toMSec(f: Float): Long = (f * 3600000f).toLong()
 
+
     /**
      * Converts a long representing msec since midnight to
      * a float representing hours since midnight.
@@ -54,3 +53,4 @@ class SimpleHourFormatter : ValueFormatter() {
 
     fun toHour(i: Int) = toHour(i.toLong())
 }
+
